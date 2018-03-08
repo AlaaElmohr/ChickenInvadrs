@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/project.css" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico" />
+    <title>chicken invaders</title>
+    <style>
+
+body{
+  background:url(img/Background.jpg);
+}
+video{
+position:absolute;
+height:100%;
+width:100%;
+display:block;
+margin-left: auto;
+margin-right: auto;;
+}
+
+button {  
+    position: absolute;
+right:    0;
+bottom:   0;
+margin-bottom: 20px;
+margin-right: 20px;
+width: 350px;
+
+	}
+    </style>
+</head>
+<body onload="hideButton()">
+  <video autoplay id="myVideo">
+<source src="tutorial.mp4" type="video/mp4" >
+  </video>
+  
+<button type="button" id="button">
+<a href="game.html"><h1>Start Game</h1><a>
+</button>
+  
+
+<script type='text/javascript'>
+    document.getElementById('myVideo').addEventListener('ended',myHandler,false);
+	function hideButton(){
+		document.getElementById('button').style.visibility = 'hidden';
+		
+	}
+    function myHandler() {
+       document.getElementById('button').style.visibility = 'visible';
+    }
+</script>
+
+</body>
+</html>

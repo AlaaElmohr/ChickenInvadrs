@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="css/video.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>	Video</title>
+
+</head>
+<html>
+<body  onload="setStartState()">
+  <div class="canvas-section"  id="canvas-section">
+  <form>
+    <div class="score">
+  <label>score:</label>
+  &nbsp;
+  <input type="text" id="score"></input>
+  </div>
+   <div class="leg">
+  <i class="fa fa-bolt fa-3x" aria-hidden="true"></i>
+  &nbsp;
+  <input type="text" id="leg"></input>
+  </div>
+  <div  class="trial">
+  <label style="margin-left:10px;">Trail:</label>
+<input type="text" id="trial"  name="trial"></input>
+<i class="fa fa-heart fa-3x " id="heart3" aria-hidden="true"></i>
+<i class="fa fa-heart fa-3x" id="heart2" aria-hidden="true"></i>
+<i class="fa fa-heart fa-3x" id="heart1" aria-hidden="true"></i>  </div>
+  </form>
+  </div>
+    <canvas id="myCanvas"  style="border:1px solid #000000"></canvas>
+    <img src="img/Background.jpg" id="background" style="display:none">
+
+  <!---          <audio src = "audio/vader.mp3" autoplay></audio>
+  -->
+
+  <audio id="soundEffects"></audio>
+  <div class="game-over"  id="game-over">
+    
+  <h1 class="over" id="over">Game Over</h1>
+  <div class="form">
+  <form action="name.php" method="post">
+    <h1>Your Name:</h1>
+    <input type="text" name="name">
+    <h1>Your score:</h1>
+    <input type="text"  name="score" id="score2"></input>
+    <button type="submit"><h4>submit</h4></button>
+  </form>
+  <img src="img/chicken4.png" style="margin-top:-300px;width:150px;height:150px;">
+
+  </div>
+
+    <script type="text/javascript">
+
+      var sound_Effects = document.getElementById("soundEffects");
+      //  var Width = $(window).width();
+        // var Height = $(window).height();
+        var trial=3;
+        var leg=0;
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+           canvas.height = window.innerHeight-50;
+           function random(){
+           var rr=0;
+ var randomX = new Array();
+  for(var i =0 ; i<10;i++){
+   randomX[i]=rr;
+   rr=rr+2;
+ }
+ var ee= randomX[Math.floor(Math.random() * randomX.length)];
+ return ee;
+ }
+
+  
+
+        var width = canvas.width, height = canvas.height;
+        const SIZE = 20;
+        const VOID = 0, CHICKEN = 1, ROCKET = 2, LASER = 3,EGG=4,LEG=5,EXPLOSION=6;        
+        var time=60;
+        var rocket = {x: SIZE / 2, y: SIZE - 1};
+        var score = 0;
+            printf(rocket.x," ",rocket.y);
+
+        //initiate the monitor grid
+        var grid = new Array(SIZE);
+        for (var i = 0; i < SIZE; i++)
+        {
+            grid[i] = new Array(SIZE);
+            setMem(grid[i], VOID);
+            window.console.log();
+        }
+
+        setInterval(update_locations_of_lasers, 100);
+		
+		//setInterval(update_locations_of_legs, 200);
+        //setInterval(Egg, 100);
+
+
+        document.onkeydown = checkKey;
+
+        function checkKey(e) {
+
+            e = e || window.event;
+
+            if (e.keyCode == '38') { //up arrow
+                //do nothing
+            } else if (e.keyCode == '40') { //down arrow
+                //do nothing
+            } else if (e.keyCode == '37') {
+                printf("go left");
+                grid[rocket.x][rocket.y] = 0;
+                rocket.x--;
+                if (rocket.x < 0)
+                    rocket.x = 0;
+                grid[rocket.x][rocket.y] = 2; // left arrow
+            } else if (e.keyCode == '39') { //right arrow
+            	
+                printf("go right");
+                grid[rocket.x][rocket.y] = 0;
+                rocket.x++;
+                if (rocket.x >= SIZE)
+                    rocket.x = SIZE - 1;
+                grid[rocket.x][rocket.y] = 2;
+            } else if (e.keyCode == '32') { //right arrow
+                printf("fire!");
+                
+                grid[rocket.x][rocket.y - 1] = 3;
+                sound_Effects.src = "audio/laser.MP3";
+                sound_Effects.play();
+            }
+
+
+
+            displayFrame();
+
+        }
+      
+
+        function displayFrame()
+              {
+                  //          setStartState();
+
+                  var w = width / SIZE;
+                  var h = height / SIZE;
+
+                  for (var i = 0; i < SIZE; i++) {
+
+
+                      for (var j = 0; j < SIZE; j++)
+                      {
+
+                          var image = new Image();
+                           var image2 = new Image();
+                          if (grid[i][j] === VOID) //0=space void
+                          {
+                              ctx.fillStyle = 'rgba(0,0,0,1)';
+                              var img = document.getElementById("background")
+                              var pat = ctx.createPattern(img, "repeat");
+                              ctx.fillStyle = pat;
+
+
+                          } else if (grid[i][j] === CHICKEN) //1=chicken red
+                          {
+                              //        ctx.fillStyle = 'rgba(255,0,0,1)';
+                              image.src = "img/chicken.png";
+
+                          }
+
+
+                          else if (grid[i][j] === ROCKET) //2=rocket green
+                          {
+                              //        ctx.fillStyle = 'rgba(0,255,0,1)';
+                              image.src = "img/rocket.png"
+
+                          } else if (grid[i][j] === LASER) //3=laser blue
+                          {
+                              //      ctx.fillStyle = 'rgba(0,0,255,1)';
+                              image.src = "img/laser.png"
+                          }
+                          else if (grid[i][j] === EGG) //4=EGG  white
+                          {
+                              //      ctx.fillStyle = 'rgba(225,225,255,1)';
+                              image.src = "img/egg.png"
+                          }else if(grid[i][j]===LEG){
+							image.src = "img/leg.png"
+						  }
+                          ctx.fillRect(i * w, j * h, w, h);
+                          ctx.drawImage(image, i *w, h*j ,40,40);
+
+                      }
+
+                  }
+
+              }
+
+
+
+
+        function setStartState()
+        {
+
+
+            for (var i = 0; i < SIZE; i++)
+            {
+                if (i % 2 === 0) //put a chicken here
+                {
+                    grid[i][1] = CHICKEN;
+
+			
+                   
+                }
+            }
+
+            grid[SIZE / 2][SIZE - 1] = ROCKET; //the rocket
+           
+
+
+            displayFrame();
+        }
+        function make_egg(){
+
+	var i=random();
+	console.log("egg" + i);
+	if(grid[i][1]==CHICKEN){
+	grid[i][2]=EGG;
+		var k= 1;                     
+                                              
+                                
+                             function myLoop (i,j) {           
+                              setTimeout(function () {  
+                              	//grid[i][j] = VOID;
+                                grid[i][j+k]=EGG;
+                                 
+                                   grid[i][j-1+k]=VOID; 
+                              
+                             
+                                    k++;                   
+                                    if (k <SIZE) {            
+                                     myLoop(i,j);             
+                                    }   
+                                    if(grid[i][j+k]==ROCKET) {
+
+                                    	trial--;
+										sound_Effects.src = "audio/explosion.wav";
+                    sound_Effects.play();
+                                    	if(trial==0){
+                                        
+                                        gameOver();
+
+                                        }
+                                    	 getTrial(trial);
+                                    }                    
+                                 }, 100)
+                              }                           
+
+myLoop(i,2); 
+}
+	if(grid[i][1]==VOID){
+	grid[i][2]=VOID;
+}
+	
+
+}
+
+
+        function setMem(grid, val) {
+
+            for (var i = 0; i < grid.length; i++)
+            {
+                grid[i] = val;
+            }
+
+        }
+
+
+        function printf(x)
+        {
+            window.console.log(x);
+        }
+
+        function update_locations_of_lasers()
+        { var flag=0;
+            
+            for (var i = 0; i < SIZE; i++) {
+
+
+                for (var j = 0; j < SIZE; j++)
+                {
+
+                    if (grid[i][j] == LASER)
+                    {
+
+                        if (j - 1 > 0 && grid[i][j - 1] == CHICKEN) {
+                            score=score+10;
+                            getScore(score);
+							sound_Effects.src = "audio/eat.MP3";
+                            sound_Effects.play();
+                           if (score == 100){
+                           	gameOver();
+                           }
+                            sound_Effects.src = "audio/hit.MP3";
+                            sound_Effects.play();
+							grid[i][j - 1] == LEG;
+							
+
+							flag=1;
+                        }
+                        
+
+                        grid[i][j] = VOID;
+                        
+                        if (j - 1 >= 0){
+							if(flag==0&& grid[i][j-1]!=LEG)
+                            grid[i][j - 1] = LASER;
+							else{
+							grid[i][j - 1] = LEG;
+							
+							var k= 0;                     
+                                
+                             function myLoop (i,j) {           
+                              setTimeout(function () {  
+                              	grid[i][j - 1] = VOID;
+                                grid[i][j+k]=LEG;
+                                        if(grid[i][j+k]!=ROCKET){
+                                   grid[i][j-1+k]=VOID; 
+                              	}
+                                    k++;                   
+                                    if (k <SIZE) {            
+                                     myLoop(i,j);             
+                                    }   
+                                    if(grid[i][j+k]==ROCKET) {
+                                        leg++;         	
+                                        getLeg(leg);
+                                    }                    
+                                 }, 100)
+                              }                           
+
+myLoop(i,j); 
+							
+                            
+								
+							
+							//update_locations_of_legs();
+							}
+							}
+							
+                            else if(grid[i][j]!=LEG)
+                            grid[i][j] = VOID;
+							flag=0;					
+					
+					}
+            }
+			}
+            printf("updating lasers!");
+            displayFrame();
+
+            //  printf(score);
+        }
+        function getScore(score){
+          document.getElementById("score").value=score;
+          document.getElementById("score2").value=score;
+		  
+        }
+		
+		function update_locations_of_legs()
+{
+//printf("enterd legs");
+
+    for (var i = 0; i < SIZE; i++) {
+        for (var j = 0; j < SIZE; j++)
+        {
+
+            if(grid[i][j]==LEG){
+					
+						grid[i][j] = VOID;
+                        if (j - 1 >= 0){
+                            grid[i][j + 1] = LEG;
+							}
+							
+                            else
+                            grid[i][j] = VOID;
+					
+					
+					
+					
+					}
+        }
+    }
+    //printf("updating lasers!");
+    displayFrame();
+
+    //  printf(score);
+}
+
+setInterval(make_egg,2000);
+function getTrial(trial){
+    if(trial==2){
+        document.getElementById("heart1").style.display="none";
+        //  document.getElementById("heart1-1").style.display="none";
+    }
+    if(trial==1){
+        document.getElementById("heart2").style.display="none";
+        //  document.getElementById("heart2-1").style.display="none";
+    }
+    if(trial==0){
+        document.getElementById("heart3").style.display="none";
+         // document.getElementById("heart3-1").style.display="none";
+    
+    }
+
+  }
+   
+function getLeg(leg){
+	        document.getElementById("leg").value=leg;
+
+}
+
+
+function gameOver(){
+				for (var i = 0; i < SIZE; i++) {
+
+
+                for (var j = 0; j < SIZE; j++)
+                {
+					if(grid[i][j]==ROCKET){
+					grid[i][j]=EXPLOSION;
+					
+					}
+				}
+				}
+				
+				displayFrame();
+				for(var i=0;i<500;i++){
+				}
+				
+                 document.getElementById("myCanvas").style.display="none";
+                 document.getElementById("game-over").style.display="block";
+				 if(trial==0){
+				 sound_Effects.src = "audio/game over.MP3";
+                    sound_Effects.play();
+					}else{
+					sound_Effects.src = "audio/win.MP3";
+                    sound_Effects.play();
+					
+					}
+}
+
+
+    </script>
+
+</body>
+</html>

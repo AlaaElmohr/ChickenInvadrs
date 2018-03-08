@@ -1,0 +1,206 @@
+body{
+  background:url(../img/Background.jpg);
+ font-size:10px;
+ overflow: hidden;
+
+}
+a{
+  text-decoration: none;
+}
+canvas{
+
+  margin-left:-10px;
+}
+@font-face{
+  font-family:Aracde Classic;
+  src:url('../font/ARCADE_C.ttf')
+}
+
+.canvas-section .score , .game-over .score {
+  margin-left:-10px;
+  margin-top:-10px;
+  width:250px;
+  height:50px;
+  border-radius:0 0 50px 0px;
+  background-color: rgba(48,0,126,0.8);
+    filter:drop-shadow(8px 8px 10px purple);
+}
+ .canvas-section .leg{
+  margin-left:-10px;
+  margin-top:-50px;
+  width:150px;
+  height:50px;
+  border-radius:0px 50px 0px 0px;
+  background-color: rgba(48,0,126,0.8);
+    filter:drop-shadow(5px -4px 10px purple);
+}
+.game-over .leg{
+  margin-left:-340px;
+  margin-top:60px;
+  width:150px;
+  height:50px;
+  border-radius:0px 50px 0px 0px;
+  background-color: rgba(48,0,126,0.8);
+    filter:drop-shadow(5px -4px 10px purple);
+}
+.fa-bolt{
+  color:#fff;
+  margin-left:30px;
+  margin-top:10px;
+}
+div .score {
+  display: inline-block;
+}
+.fa-heart{
+  color:#fff;
+}
+#heart3{
+  margin-left:-30px;
+}
+.canvas-section .trial{
+  float:right;
+  margin-right:-10px;
+  margin-top:-10px;
+  width:260px;
+  height:50px;
+  border-radius:0 0 0 50px;
+  background-color: rgba(48,0,126,0.8);
+    filter:drop-shadow(-10px 7px 10px purple);
+}
+ .game-over .trial{
+  float:right;
+  margin-right:-10px;
+  margin-top:-10px;
+  width:280px;
+  height:50px;
+  border-radius:0 0 0 50px;
+  background-color: rgba(48,0,126,0.8);
+    filter:drop-shadow(-10px 7px 10px purple);
+}
+
+.logo{
+  margin-top:30px;
+  display: block;
+ margin-left: auto;
+ margin-right: auto;
+ width:400px;
+ height:auto;
+}
+
+button{
+  background-color: rgba(48,0,126,0.3);
+  width:400px;
+  height:70px;
+  border-radius:50px;
+  border:2px solid #fff;
+  margin-top:20px;
+  display: block;
+ margin-left:auto;
+ margin-right:auto;
+cursor:url(../img/fork.png), auto;
+
+}
+button:hover{
+    background-color: rgba(48,0,126,0.6);
+
+}
+p{
+  font-family:Aracde Classic;
+  color:#fff;
+  font-size:3em;
+  text-align: center;
+}
+.canvas-section{
+display:none;
+}
+.canvas-section label ,.game-over label {
+  font-family:Aracde Classic;
+  color:#fff;
+  font-size:3em;
+
+}
+.canvas-section input , .game-over input{
+  width:70px;
+  background-color: transparent;
+  margin-top:-10px;
+  font-family:Aracde Classic;
+  color:#fff;
+  font-size:3em;
+  border:2px solid transparent;
+}
+
+button h1{
+  color:#fff;
+    font-family:Aracde Classic;
+      text-align: center;
+      font-size:1.5em;
+
+}
+audio .audio-explosion{
+  display:none;
+}
+.over{
+  margin-top:10%;
+  font-family:Aracde Classic;
+  color:#fff;
+  font-size:6em;
+  text-align: center;
+
+}
+.game-over{
+  display: none;
+}
+.form{
+  width:600px;
+  height:500px;
+  background:url(../img/Background.jpg);
+  opacity: 0.7;
+  display: block;
+ margin-left:auto;
+ margin-right:auto;
+filter:drop-shadow(5px 3px 25px purple);
+
+}
+.game-over h1 {
+  font-family:Aracde Classic;
+  color:#fff;
+  font-size:3em;
+
+  margin-top:20px;
+  text-align: center;
+}
+.form h1{
+  font-family:Aracde Classic;
+  color:#fff;
+  font-size:1.5em;
+
+  padding-top:50px;
+  text-align: center;
+}
+.form input{
+  width:200px;
+  height:40px;
+  margin-left:35%;
+  background-color: transparent;
+  margin-top:5%;
+  font-family:Aracde Classic;
+  color:#fff;
+  font-size:2em;
+  border:2px solid #fff;
+}
+.form  button{
+  margin-top:10%;
+  border-radius: 10px;
+  width:150px;
+  height:50px;
+  margin-left:40%;
+}
+
+button h4{
+  font-style: normal;
+  font-size:1.5em;
+  font-family:Aracde Classic;
+  color:#fff;
+  margin-top:10px;
+  text-align: center;
+}
